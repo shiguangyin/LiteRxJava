@@ -3,16 +3,16 @@
  * @date 28/01/2018
  * @Des
  */
-public class UnsafeCreateObservable<T> extends Observable<T>{
+public final class UnsafeCreateObservable<T> extends Observable<T> {
 
-    private UnsafeCreateOnSubscribe<T> actual;
+    private ObservableSource<T> source;
 
-    public UnsafeCreateObservable(UnsafeCreateOnSubscribe<T> actual){
-        this.actual = actual;
+    public UnsafeCreateObservable(ObservableSource<T> source) {
+        this.source = source;
     }
 
     @Override
-    protected void subscribeActual(Subscriber<T> subscriber) {
-        actual.onSubscribe(subscriber);
+    protected void subscribeActual(Observer<? super T> observer) {
+        source.subscribe(observer);
     }
 }

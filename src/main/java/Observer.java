@@ -3,7 +3,7 @@
  * @date 28/01/2018
  * @Des
  */
-public interface Subscriber<T> {
+public interface Observer<T> {
 
     void onSubscribe(Disposable disposable);
 
