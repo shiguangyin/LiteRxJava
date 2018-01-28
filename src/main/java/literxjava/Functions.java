@@ -32,7 +32,7 @@ public class Functions {
         }
     };
 
-    public static final Action EMPTY_COMPLETE = new Action() {
+    public static final Action EMPTY_ON_COMPLETE = new Action() {
         @Override
         public void call() {
 

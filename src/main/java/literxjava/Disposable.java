@@ -7,7 +7,7 @@ package literxjava;
  */
 public interface Disposable {
 
-    void dispose();
+    boolean dispose();
 
     boolean isDisposed();
 }

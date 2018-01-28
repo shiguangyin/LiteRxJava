@@ -1,9 +1,6 @@
 import static org.junit.Assert.*;
 
-import literxjava.Disposable;
-import literxjava.Observable;
-import literxjava.ObservableSource;
-import literxjava.Observer;
+import literxjava.*;
 import org.junit.Test;
 
 /**
@@ -48,4 +45,36 @@ public class ObservableTest {
             }
         });
     }
+
+    @Test
+    public void testCreate(){
+        Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> emitter) {
+                emitter.onNext("create");
+                emitter.onComplete();
+            }
+        }).subscribe(new Observer<String>() {
+            @Override
+            public void onSubscribe(Disposable disposable) {
+                assertNotNull(disposable);
+            }
+
+            @Override
+            public void onNext(String s) {
+                assertEquals("create",s);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                assertNotNull(throwable);
+            }
+        });
+    }
+
 }
