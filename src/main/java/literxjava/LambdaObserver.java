@@ -1,3 +1,10 @@
+package literxjava;
+
+import literxjava.Action;
+import literxjava.Consumer;
+import literxjava.Disposable;
+import literxjava.Observer;
+
 /**
  * @author masker
  * @date 28/01/2018

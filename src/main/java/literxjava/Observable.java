@@ -1,4 +1,6 @@
-import utils.Utils;
+package literxjava;
+
+import literxjava.utils.Utils;
 
 /**
  * @author masker

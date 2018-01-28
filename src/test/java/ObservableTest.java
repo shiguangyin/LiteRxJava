@@ -1,4 +1,9 @@
 import static org.junit.Assert.*;
+
+import literxjava.Disposable;
+import literxjava.Observable;
+import literxjava.ObservableSource;
+import literxjava.Observer;
 import org.junit.Test;
 
 /**

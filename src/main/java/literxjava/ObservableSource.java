@@ -1,3 +1,7 @@
+package literxjava;
+
+import literxjava.Observer;
+
 /**
  * @author masker
  * @date 28/01/2018
