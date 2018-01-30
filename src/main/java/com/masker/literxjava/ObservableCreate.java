@@ -7,10 +7,10 @@ import java.util.concurrent.atomic.AtomicReference;
  * @Date 2018/1/28
  * @Desc
  */
-public final class SafeCreateObservable<T> extends Observable<T> {
+public final class ObservableCreate<T> extends Observable<T> {
     private final ObservableOnSubscribe<T> source;
 
-    public SafeCreateObservable(ObservableOnSubscribe<T> source) {
+    public ObservableCreate(ObservableOnSubscribe<T> source) {
         this.source = source;
     }
 
@@ -18,7 +18,11 @@ public final class SafeCreateObservable<T> extends Observable<T> {
     protected void subscribeActual(Observer<? super T> observer) {
         SafeCreateEmitter<T> emitter = new SafeCreateEmitter<>(observer);
         observer.onSubscribe(emitter);
-        source.subscribe(emitter);
+        try{
+            source.subscribe(emitter);
+        }catch (Throwable throwable){
+            emitter.onError(throwable);
+        }
     }
 
     /*
@@ -53,7 +57,11 @@ public final class SafeCreateObservable<T> extends Observable<T> {
                 onError(new NullPointerException("onNext called with null"));
             }
             if (!isDisposed()){
-                observer.onNext(t);
+                try {
+                    observer.onNext(t);
+                }catch (Throwable throwable){
+                    observer.onError(throwable);
+                }
             }
         }
 
@@ -62,7 +70,7 @@ public final class SafeCreateObservable<T> extends Observable<T> {
             if(!isDisposed()){
                 try {
                     observer.onComplete();
-                }finally {
+                } finally {
                     dispose();
                 }
             }

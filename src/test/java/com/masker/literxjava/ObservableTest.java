@@ -1,8 +1,12 @@
 package com.masker.literxjava;
 
+import com.masker.literxjava.function.Function;
 import org.junit.Test;
+
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -79,6 +83,59 @@ public class ObservableTest {
             }
         });
         assertTrue(calls.contains(1));
+    }
+
+    @Test
+    public void testMap(){
+        Observable.create(new ObservableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(ObservableEmitter<Integer> emitter) {
+                emitter.onNext(1);
+            }
+        }).map(new Function<Integer, String>() {
+            @Override
+            public String apply(Integer integer) {
+                return "value="+integer;
+            }
+        }).subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String s) {
+                assertEquals(s,"value=1");
+            }
+        });
+
+        Observable.create(new ObservableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(ObservableEmitter<Integer> emitter) {
+                emitter.onNext(1);
+            }
+        }).map(new Function<Integer, String>() {
+            @Override
+            public String apply(Integer integer) {
+                return String.valueOf(integer);
+            }
+        }).subscribe(new Observer<String>() {
+            @Override
+            public void onSubscribe(Disposable disposable) {
+
+            }
+
+            @Override
+            public void onNext(String s) {
+                assertEquals(s,"1");
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                
+            }
+        });
+
     }
 
 }
