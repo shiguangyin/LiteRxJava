@@ -1,4 +1,4 @@
-package literxjava;
+package com.masker.literxjava;
 
 import java.util.concurrent.atomic.AtomicReference;
 

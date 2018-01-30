@@ -1,7 +1,9 @@
-import static org.junit.Assert.*;
+package com.masker.literxjava;
 
-import literxjava.*;
 import org.junit.Test;
+import java.util.ArrayList;
+import java.util.List;
+import static org.junit.Assert.*;
 
 /**
  * @author masker
@@ -48,6 +50,7 @@ public class ObservableTest {
 
     @Test
     public void testCreate(){
+        List<Integer> calls = new ArrayList<>();
         Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(ObservableEmitter<String> emitter) {
@@ -67,7 +70,7 @@ public class ObservableTest {
 
             @Override
             public void onComplete() {
-
+                calls.add(1);
             }
 
             @Override
@@ -75,6 +78,7 @@ public class ObservableTest {
                 assertNotNull(throwable);
             }
         });
+        assertTrue(calls.contains(1));
     }
 
 }
