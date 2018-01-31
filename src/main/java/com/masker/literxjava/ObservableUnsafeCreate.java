@@ -1,19 +1,15 @@
-package literxjava;
-
-import literxjava.Observable;
-import literxjava.ObservableSource;
-import literxjava.Observer;
+package com.masker.literxjava;
 
 /**
  * @author masker
  * @date 28/01/2018
  * @Des
  */
-public final class UnsafeCreateObservable<T> extends Observable<T> {
+public final class ObservableUnsafeCreate<T> extends Observable<T> {
 
     private ObservableSource<T> source;
 
-    public UnsafeCreateObservable(ObservableSource<T> source) {
+    public ObservableUnsafeCreate(ObservableSource<T> source) {
         this.source = source;
     }
 

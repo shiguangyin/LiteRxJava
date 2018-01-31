@@ -1,8 +1,4 @@
-package literxjava;
-
-import literxjava.Action;
-import literxjava.Consumer;
-import literxjava.Disposable;
+package com.masker.literxjava;
 
 /**
  * @author masker

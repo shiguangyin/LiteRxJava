@@ -1,6 +1,7 @@
-package literxjava;
+package com.masker.literxjava;
 
-import literxjava.utils.Utils;
+import com.masker.literxjava.function.Function;
+import com.masker.literxjava.utils.Utils;
 
 /**
  * @Author masker
@@ -9,26 +10,26 @@ import literxjava.utils.Utils;
  */
 public abstract class Observable<T> implements ObservableSource<T> {
 
-    public void subscribe() {
+    public final void subscribe() {
         LambdaObserver<T> observer = new LambdaObserver<>(Functions.EMPTY_ON_SUBSCRIBE,
                 Functions.EMPTY_ON_NEXT, Functions.EMPTY_ON_COMPLETE, Functions.EMPTY_ON_ERROR);
         subscribeActual(observer);
     }
 
     @Override
-    public void subscribe(Observer<? super T> observer) {
+    public final void subscribe(Observer<? super T> observer) {
         Utils.checkNotNull(observer);
         subscribeActual(observer);
     }
 
-    public void subscribe(Consumer<? super T> onNext) {
+    public final void subscribe(Consumer<? super T> onNext) {
         Utils.checkNotNull(onNext);
         LambdaObserver<T> observer = new LambdaObserver<>(Functions.EMPTY_ON_SUBSCRIBE,
                 onNext, Functions.EMPTY_ON_COMPLETE, Functions.EMPTY_ON_ERROR);
         subscribeActual(observer);
     }
 
-    public void subscribe(Consumer<? super T> onNext, Consumer<Throwable> onError) {
+    public final void subscribe(Consumer<? super T> onNext, Consumer<Throwable> onError) {
         Utils.checkNotNull(onNext);
         Utils.checkNotNull(onError);
         LambdaObserver<T> observer = new LambdaObserver<>(Functions.EMPTY_ON_SUBSCRIBE, onNext,
@@ -36,7 +37,7 @@ public abstract class Observable<T> implements ObservableSource<T> {
         subscribeActual(observer);
     }
 
-    public void subscribe(Consumer<? super T> onNext, Consumer<Throwable> onError, Action onComplete) {
+    public final void subscribe(Consumer<? super T> onNext, Consumer<Throwable> onError, Action onComplete) {
         Utils.checkNotNull(onNext);
         Utils.checkNotNull(onError);
         Utils.checkNotNull(onComplete);
@@ -44,7 +45,7 @@ public abstract class Observable<T> implements ObservableSource<T> {
         subscribeActual(observer);
     }
 
-    public void subscribe(Consumer<? super T> onNext, Consumer<Throwable> onError, Action onComplete, Consumer<Disposable> onSubscribe) {
+    public final void subscribe(Consumer<? super T> onNext, Consumer<Throwable> onError, Action onComplete, Consumer<Disposable> onSubscribe) {
         Utils.checkNotNull(onNext);
         Utils.checkNotNull(onError);
         Utils.checkNotNull(onComplete);
@@ -61,11 +62,16 @@ public abstract class Observable<T> implements ObservableSource<T> {
         if (source instanceof Observable) {
             throw new IllegalArgumentException("source can't be observable");
         }
-        return new UnsafeCreateObservable<>(source);
+        return new ObservableUnsafeCreate<>(source);
     }
 
     public static <T> Observable<T> create(ObservableOnSubscribe<T> onSubscribe) {
         Utils.checkNotNull(onSubscribe);
-        return new SafeCreateObservable<>(onSubscribe);
+        return new ObservableCreate<>(onSubscribe);
+    }
+
+    public final <R> Observable<R> map(Function<T,R> mapper){
+        Utils.checkNotNull(mapper);
+        return new ObservableMap<>(this, mapper);
     }
 }

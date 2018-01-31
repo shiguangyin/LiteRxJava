@@ -1,4 +1,4 @@
-package literxjava.utils;
+package com.masker.literxjava.utils;
 
 /**
  * @author masker

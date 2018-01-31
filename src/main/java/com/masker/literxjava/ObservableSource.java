@@ -1,6 +1,4 @@
-package literxjava;
-
-import literxjava.Observer;
+package com.masker.literxjava;
 
 /**
  * @author masker

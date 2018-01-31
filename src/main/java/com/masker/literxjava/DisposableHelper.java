@@ -1,8 +1,7 @@
-package literxjava;
+package com.masker.literxjava;
 
-import literxjava.utils.Utils;
+import com.masker.literxjava.utils.Utils;
 
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
